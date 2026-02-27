@@ -123,6 +123,14 @@ button {
   gap:6px;
 }
 
+/* adding 3d effect to hero slider */
+.perspective {
+  perspective: 2200px;
+}
+
+
+
+
 @layer base {
   html,
   body {

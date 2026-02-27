@@ -54,7 +54,7 @@ router.post("/hero-slider/add/:sellerID", upload.single("image"), async (req, re
         const { sellerID } = req.params
         const { ctaLink, title, subtitle } = req.body;
 
-        if (!req.file) return res.status(400).json({ message: "Image file is required" })
+        if (!req.file) return res.status(400).json({ message: "Image or video is required" })
 
         const imagePath = await uploadToFTP(req.file.path);
         fs.unlinkSync(req.file.path);
