@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import axios from "axios";
 import ButtonLoader from "../ButtonLoader";
 
@@ -148,24 +148,22 @@ export default function ProductBoxPremium({
           ? `/product/${item.slug}`
           : `/brand/${settings.brandSlug}/product/${item.slug}`
       }
-      className="group relative  h-[80vh] rounded-lg shadow   overflow-hidden block outline-none"
+      className="group relative  h-[300px] rounded-lg   overflow-hidden block outline-none"
     >
-      <div className="relative w-full  sm:h-56 md:h-72 overflow-hidden  rounded-lg">
-        {loading && (
-          <div className="absolute inset-0 animate-pulse " />
-        )}
+      <div className="relative w-full  h-[70%] rounded-xl overflow-hidden ">
+        {loading && <div className="absolute inset-0 animate-pulse " />}
         <img
           src={`${item.mainImageURL}`}
           alt={item.name}
           loading="lazy"
           onLoad={() => setLoading(false)}
           onError={() => setLoading(false)}
-          className={`w-full h-full object-cover scale-96 shadow-lg shadow-black/30 rounded-lg overflow-hidden   transition-transform duration-300 ease-in-out group-hover:scale-105 ${loading ? "opacity-0" : "opacity-100"}`}
+          className={`w-full h-full object-cover   overflow-hidden ${loading ? "opacity-0" : "opacity-100"}`}
         />
 
         <div className="absolute inset-0 flex flex-row items-end justify-center gap-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-black/5">
           <button
-            className="w-full flex justify-center items-center rounded-t-2xl text-xs text-white bg-[#333] font-bold p-3 hover:bg-white hover:text-black border border-b-0 border-[#333] hover:border-black disabled:opacity-70 transition-all duration-200 ease-linear"
+            className="group/heart w-8 h-8 hover:w-32  absolute top-14  hover:bg-black hover:text-white right-3 p-2 bg-white rounded-full  transition-all duration-200 ease-linear opacity-0   group-hover:opacity-100 translate-x-5 group-hover:translate-x-0"
             disabled={adding}
             onClick={handleAddToCart}
           >
@@ -174,23 +172,36 @@ export default function ProductBoxPremium({
             ) : hasMultipleVariants || hasOptions ? (
               "Choose Option"
             ) : (
-              "Add To Cart"
+              <span
+                className={`w-full h-full flex overflow-hidden items-center  justify-between`}
+              >
+                <ShoppingBag
+                  size={16}
+                  className={`transition-all  text-xl duration-20 `}
+                />
+                <span className="text-xs hidden font-bold  whitespace-nowrap w-[80%] h-full  group-hover/heart:block ">{`Add to Cart`}</span>
+              </span>
             )}
           </button>
         </div>
 
         <div
           role="button"
-          className="group/heart absolute top-3 right-3 p-2 bg-white rounded-full hover:bg-red-100 transition-all duration-200 ease-linear opacity-0 group-hover:opacity-100 translate-x-5 group-hover:translate-x-0"
+          className={`group/heart w-8 h-8 hover:w-32  absolute top-3  hover:bg-black hover:text-white right-3 p-2 bg-white rounded-full  transition-all duration-200 ease-linear opacity-0   group-hover:opacity-100 translate-x-5 group-hover:translate-x-0`}
           onClick={handleAddToFavourites}
         >
           {addingToFavourites ? (
             <ButtonLoader />
           ) : (
-            <Heart
-              size={16}
-              className={`transition-all duration-200 ease-linear ${isFavourite ? "text-red-500 fill-red-500" : "text-[#333] group-hover/heart:text-red-500"}`}
-            />
+            <span
+              className={`w-full h-full flex overflow-hidden items-center  justify-between`}
+            >
+              <Heart
+                size={16}
+                className={`transition-all  text-xl duration-20 ${isFavourite ? "fill-red-600 text-red-600" : "text-black group-hover/heart:text-white"} font-bold ease-linear`}
+              />
+              <span className="text-xs hidden font-bold  whitespace-nowrap w-[80%] h-full  group-hover/heart:block ">{`${isFavourite ? "Remove" : "Add To"} Wishlist`}</span>
+            </span>
           )}
         </div>
 
@@ -204,15 +215,18 @@ export default function ProductBoxPremium({
         )}
       </div>
 
-      <div className="p-3 sm:p-4 flex flex-col flex-grow justify-center items-center">
-        <p className="head text-sm sm:text-base text-[var(--text)] text-center line-clamp-1">
+      <div className="p-3 sm:p-4 flex flex-col flex-grow justify-start items-start">
+        <p className="head text-sm relative transition-all duration-200 hover:text-blue-600 group/item sm:text-base text-[var(--text)] text-left line-clamp-1 cursor-pointer">
           {item.title}
-        </p>
 
+          {/* 2. Span ab is group ke hover par scale hoga */}
+          <span className="absolute left-0 bottom-0 w-full h-[1px] bg-blue-600 origin-left transform scale-x-0 transition-transform duration-300 group-hover/item:scale-x-100"></span>
+        </p>
         <div className="flex flex-row items-center gap-2 mt-2">
           <span className="text-gray-700 font-bold text-sm sm:text-base">
             {settings.content.currency} {item.price.toLocaleString()}
           </span>
+          <span className="text-xl text-gray-700 ">{item.comparedPrice}</span>
           {item.comparedPrice > item.price && (
             <span className="line-through text-red-400 text-xs">
               {settings.content.currency} {item.comparedPrice.toLocaleString()}

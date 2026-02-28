@@ -33,19 +33,14 @@ export default function PlatformHeroPremium({ settings, isCustomDomain }) {
   const [direction, setDirection] = useState(1);
   const [isVideo, setIsVideo] = useState(false);
 
-
-
- 
-
   useEffect(() => {
     if (settings?.content?.heroSlider?.length > 0) {
       setSlides(settings.content.heroSlider);
-      console.log('setting is' + slides);
+      console.log("setting is" + slides);
     } else {
       setSlides(dummy);
     }
   }, [settings]);
-
 
   // Autoplay
   useEffect(() => {
@@ -70,18 +65,12 @@ export default function PlatformHeroPremium({ settings, isCustomDomain }) {
   const heroSliderDataExists =
     settings?.content?.heroSlider?.length > 0 ? true : false;
 
-    useEffect(() => {
-      const src = !heroSliderDataExists ? slide.image : `${slide.image}`;
-      // Extension nikalne ke liye logic
-      const checkVideo = src.match(/\.(mp4|webm|ogg)$|video/i);
-      setIsVideo(!!checkVideo);
-    }
-    , [index, settings]);
-
- 
-
-
-
+  useEffect(() => {
+    const src = !heroSliderDataExists ? slide.image : `${slide.image}`;
+    // Extension nikalne ke liye logic
+    const checkVideo = src.match(/\.(mp4|webm|ogg)$|video/i);
+    setIsVideo(!!checkVideo);
+  }, [index, settings]);
 
   return (
     <section className="relative w-full p-5 overflow-hidden">
@@ -107,16 +96,24 @@ export default function PlatformHeroPremium({ settings, isCustomDomain }) {
               transformOrigin: "center center",
             }}
           >
-            {
-              isVideo ? (
-                <video loading="lazy" autoPlay loop muted className="w-full h-full object-cover  absolute z-10" src={!heroSliderDataExists ? slide.image : `${slide.image}`}></video>
-              ) : ( <img loading="lazy"
+            {isVideo ? (
+              <video
+                loading="lazy"
+                autoPlay
+                loop
+                muted
+                className="w-full h-full object-cover  absolute z-10"
+                src={!heroSliderDataExists ? slide.image : `${slide.image}`}
+              ></video>
+            ) : (
+              <img
+                loading="lazy"
                 src={!heroSliderDataExists ? slide.image : `${slide.image}`}
                 alt="banner"
                 className="w-full h-full lg:object-center object-[80%_90%] object-cover"
-              />)
-            }
-            
+              />
+            )}
+
             {/* {/* <img
               src={!heroSliderDataExists ? slide.image : `${slide.image}`}
               alt="banner"
@@ -137,8 +134,9 @@ export default function PlatformHeroPremium({ settings, isCustomDomain }) {
                   </p>
                 )}
                 <button
-                // onClick={() => window.open(slide.ctaLink || (isCustomDomain ? "/" : `/brand/${settings.brandSlug}`), "_blank", "noopener,noreferrer")}
-                className="px-10 py-3 bg-black text-white rounded-full font-bold mt-4">
+                  // onClick={() => window.open(slide.ctaLink || (isCustomDomain ? "/" : `/brand/${settings.brandSlug}`), "_blank", "noopener,noreferrer")}
+                  className="px-10 py-3 bg-black text-white rounded-full font-bold mt-4"
+                >
                   Shop Now
                 </button>
               </div>

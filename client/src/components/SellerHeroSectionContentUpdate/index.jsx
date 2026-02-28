@@ -25,8 +25,8 @@ export default function SellerHeroSectionContentUpdate({ user, settings }) {
 
     const isImage = validImageTypes.includes(file.type);
     const isVideo = file.type.startsWith("video/");
-    if(isVideo){
-        setIsPreviewVideo(isVideo);
+    if (isVideo) {
+      setIsPreviewVideo(isVideo);
     }
     if (!isImage && !isVideo) {
       return window.toastify(
@@ -174,24 +174,24 @@ export default function SellerHeroSectionContentUpdate({ user, settings }) {
             className="w-full text-sm !p-2.5 bg-white border border-gray-300 cursor-pointer !rounded-none"
             onChange={handleImageChange}
           />
-         {preview && (
-  <div className="mt-4">
-    {isPreviewVideo ? (
-      <video
-        src={preview}
-        controls
-        muted
-        className="w-[200px] h-[200px] object-cover rounded-md shadow-sm"
-      />
-    ) : (
-      <img
-        src={preview}
-        alt="preview"
-        className="w-[200px] h-[200px] object-contain rounded-md shadow-sm"
-      />
-    )}
-  </div>
-)}
+          {preview && (
+            <div className="mt-4">
+              {isPreviewVideo ? (
+                <video
+                  src={preview}
+                  controls
+                  muted
+                  className="w-[200px] h-[200px] object-cover rounded-md shadow-sm"
+                />
+              ) : (
+                <img
+                  src={preview}
+                  alt="preview"
+                  className="w-[200px] h-[200px] object-contain rounded-md shadow-sm"
+                />
+              )}
+            </div>
+          )}
         </div>
 
         <button
@@ -228,36 +228,36 @@ export default function SellerHeroSectionContentUpdate({ user, settings }) {
                   <td className="px-4 py-2 border-b border-gray-200 text-left">
                     {index + 1}
                   </td>
-              <td className="px-4 py-2 border-b border-gray-200 text-center">
-  {/* Check if the source is a video */}
-  {slide.image.match(/\.(mp4|webm|ogg)$|video/i) ? (
-    <video
-      src={`${slide.image}`}
-      muted
-      loop
-      autoPlay
-      playsInline
-      style={{
-        width: 50,
-        height: 50,
-        objectFit: "cover", // Cover zyada behtar lagta hai thumbnail ke liye
-        margin: "0 auto",
-        borderRadius: "4px" // Optional: thoda rounded corners ke liye
-      }}
-    />
-  ) : (
-    <Image
-      src={`${slide.image}`}
-      alt={"slide" + index}
-      style={{
-        width: 50,
-        height: 50,
-        objectFit: "contain",
-        margin: "0 auto",
-      }}
-    />
-  )}
-</td>
+                  <td className="px-4 py-2 border-b border-gray-200 text-center">
+                    {/* Check if the source is a video */}
+                    {slide.image.match(/\.(mp4|webm|ogg)$|video/i) ? (
+                      <video
+                        src={`${slide.image}`}
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        style={{
+                          width: 50,
+                          height: 50,
+                          objectFit: "cover", // Cover zyada behtar lagta hai thumbnail ke liye
+                          margin: "0 auto",
+                          borderRadius: "4px", // Optional: thoda rounded corners ke liye
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={`${slide.image}`}
+                        alt={"slide" + index}
+                        style={{
+                          width: 50,
+                          height: 50,
+                          objectFit: "contain",
+                          margin: "0 auto",
+                        }}
+                      />
+                    )}
+                  </td>
                   <td className="px-4 py-2 border-b border-gray-200 text-gray-700 text-center">
                     {slide.title ? <p>{slide.title}</p> : "_"}
                   </td>
