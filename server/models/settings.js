@@ -64,6 +64,12 @@ const settingsSchema = new Schema({
           default: null,
         },
       }],
+        brandIcons: [{
+            imageURL: { type: String, default: null },
+        }],
+
+
+
         currency: { type: String, default: 'Rs' },
         footerMenu1Name: { type: String, default: "Footer Menu 1" },
         footerMenu2Name: { type: String, default: "Footer Menu 2" },
@@ -83,6 +89,7 @@ const settingsSchema = new Schema({
         showRatings: { type: Boolean, default: true },
         showStripper: { type: Boolean, default: true },
         showSpotlightProduct: { type: Boolean, default: true },
+        showBrands: { type: Boolean, default: true },
     },
 
     // Product Page Sale Section

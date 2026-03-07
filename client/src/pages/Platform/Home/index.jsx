@@ -43,6 +43,7 @@ import PlatformRecentProductsPremium from "../../../components/PlatformRecentPro
 import PlatformExplorePremium from "../../../components/PlatformExplorePremium";
 import PlatformStripperPremium from "../../../components/PlatformStripperPremium";
 import SellerSpotlightProduct from "../../../components/SellerSpotlightProduct";
+import SellerBrandsContent from "../../../components/SellerBrandsContent";
 
 export default function Home({ settings, isCustomDomain }) {
   const style = settings?.layout?.homePageStyle;
@@ -131,6 +132,11 @@ export default function Home({ settings, isCustomDomain }) {
   const spotlightProductComponents = {
     premium: SellerSpotlightProduct,
   };
+  const brandsComponents = {
+    premium: SellerBrandsContent,
+  }
+
+
 
   const HeroTopComponent = heroTopComponents[style] || null;
   const HeroComponent = heroComponents[style] || null;
@@ -144,6 +150,8 @@ export default function Home({ settings, isCustomDomain }) {
   const FaqsComponent = faqsComponents[style] || null;
   const StripperComponents = stripperComponents[style] || null;
   const SpotlightProductComponent = spotlightProductComponents[style] || null;
+  const BrandsComponent = brandsComponents[style] || null;
+
 
   return (
     <div className="w-full overflow-x:hidden">
@@ -182,13 +190,9 @@ export default function Home({ settings, isCustomDomain }) {
           isCustomDomain={isCustomDomain}
         />
       )}
-      {
-        SpotlightProductComponent && settings?.visibility?.showSpotlightProduct && (
-          <SellerSpotlightProduct
-             isCustomDomain={isCustomDomain} storeSettings={settings}
-          />
-        )
-      }
+     
+
+
       {ExploreComponent && settings?.visibility?.showExploreMore && (
         <ExploreComponent settings={settings} isCustomDomain={isCustomDomain} />
       )}
@@ -201,12 +205,6 @@ export default function Home({ settings, isCustomDomain }) {
       )}
       {FaqsComponent && (
         <FaqsComponent settings={settings} isCustomDomain={isCustomDomain} />
-      )}
-      {StripperComponents && settings?.visibility?.showStripper && (
-        <StripperComponents
-          settings={settings}
-          isCustomDomain={isCustomDomain}
-        />
       )}
     </div>
   );

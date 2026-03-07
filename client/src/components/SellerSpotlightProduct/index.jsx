@@ -2,7 +2,7 @@ import React from 'react'
 
 function SellerSpotlightProduct() {
   return (
-    <div className='w-full m-10 bg-gray-800'>
+    <div className='w-full mt-10  h-50 bg-gray-800'>
       
 
     </div>

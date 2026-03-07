@@ -109,6 +109,31 @@ router.delete('/stripper-text-delete/:sellerID', async (req, res) => {
     }
 });
 
+router.post('/brand-icons/:sellerID' , upload.single('icons') , async (req,res)=>{
+  console.log("Brand icons endpoint hit" , req.params.sellerID);
+    try{
+        const {sellerID} = req.params 
+  
+        if (!req.file) return res.status(400).json({ message: "Image file is required" })
+
+        const imagePath = await uploadToFTP(req.file.path); 
+        fs.unlinkSync(req.file.path);
+
+        const sellerSettings = await settingsModel.findOne({sellerID} )
+        if (!sellerSettings) return res.status(404).json({ message: "Seller settings not found" })      
+        sellerSettings.content.brandIcons.push({
+            imageURL: imagePath,
+        })
+        await sellerSettings.save();
+      
+
+        res.status(202).json({ message: "Brand icon added successfully" , data:sellerSettings?.content?.brandIcons } );
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 router.post("/top-notifications/update/:sellerID", async (req, res) => {
   try {
     const { sellerID } = req.params;
@@ -116,7 +141,7 @@ router.post("/top-notifications/update/:sellerID", async (req, res) => {
 
     const sellerSettings = await settingsModel.findOne({ sellerID });
     if (!sellerSettings)
-      return res.status(404).json({ message: "Seller settings not found" });
+      return res.status(404).json({ message: "Seller settings not found"  });
 
     const oldLength = sellerSettings.content.topNotifications.length;
     sellerSettings.content.topNotifications = data;

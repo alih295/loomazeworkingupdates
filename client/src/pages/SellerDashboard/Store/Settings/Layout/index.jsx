@@ -23,6 +23,7 @@ const initialState = {
     showRatings: true,
     showStripper:true,
     showSpotlightProduct:true,
+    showBrands:true,
   },
 };
 
@@ -65,6 +66,7 @@ const styles = [
   },
 ];
 
+
 export default function Layout({ user, settings, setSettings }) {
   const [state, setState] = useState(initialState);
   const [loading, setLoading] = useState(false);
@@ -89,6 +91,7 @@ export default function Layout({ user, settings, setSettings }) {
       showRatings,
       showStripper,
       showSpotlightProduct,
+      showBrands,
     } = settings.visibility;
     setState({
       layout: {
@@ -109,6 +112,7 @@ export default function Layout({ user, settings, setSettings }) {
         showRatings,
         showStripper,
         showSpotlightProduct,
+        showBrands,
       },
     });
   }, [settings]);
@@ -616,6 +620,43 @@ export default function Layout({ user, settings, setSettings }) {
                 />
               </svg>
             </div>
+          </div>
+        </div>
+                
+
+        <div className="p-4 border  border-gray-200">
+          <div className="flex justify-between items-center mb-4">
+            <p className="text-sm text-gray-900 font-bold">
+              Display Brands 
+            </p>
+            <div
+              className={`relative w-10 h-5.5 rounded-full cursor-pointer transition-all duration-300 ease-out ${state.visibility.showBrands ? "bg-blue-500" : "bg-gray-200"}`}
+              onClick={() =>
+                setState((prev) => ({
+                  ...prev,
+                  visibility: {
+                    ...prev.visibility,
+                    showBrands: !prev.visibility.showBrands,
+                  },
+                }))
+              }
+            >
+              <div
+                className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full transition-all duration-200 ease-out ${state.visibility.showBrands ? "left-[calc(100%-20px)]" : "left-1"}`}
+              ></div>
+            </div>
+          </div>
+
+          <div className="relative flex justify-center items-end p-3 w-full bg-gray-100 border border-gray-200">
+          <img className="w-20 h-20 object-cover" src="https://imgs.search.brave.com/crKm-FuRm1W-Bd3GxWN4-EpN8orkRiW3QyzNFsHcZd4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvMjAxNi8w/Ny9SZWRkaXQucG5n" alt="" />
+            <ArrowLeft
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-700"
+            />
+            <ArrowRight
+              size={16}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-700"
+            />
           </div>
         </div>
 
