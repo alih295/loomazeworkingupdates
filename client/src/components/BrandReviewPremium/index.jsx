@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function BrandReviewPremium({ storeSettings }) {
-  console.log("sabi kuch a raha ha ", storeSettings);
   const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (storeSettings) fetchRecentReviews();
   }, [storeSettings]);
 
-  const products = [
+  useEffect(() => {
+    if(products.length === 0) setProducts(dummy)
+  }, [storeSettings]);
+  
+
+  const dummy = [
     {
       productImg:
         "https://images.pexels.com/photos/374870/pexels-photo-374870.jpeg",
@@ -77,7 +82,7 @@ function BrandReviewPremium({ storeSettings }) {
       )
       .then((res) => {
         if (res.status === 200 && res.data?.reviews?.length > 0)
-          setReviews(res.data?.reviews);
+          setProducts(res.data?.reviews);
       })
       .catch((err) => console.error("Frontend GET error", err.message))
       .finally(() => setLoading(false));
@@ -90,13 +95,13 @@ function BrandReviewPremium({ storeSettings }) {
         <p className="text-3xl capitalize font-semibold">coustomer Feedback</p>
         <p>what do people think about us? </p>
       </div>
-      <div className="flex gap-5 h-full w-max">
+      <div className="flex gap-5  h-full w-max">
         {products.map((item, i) => {
           return (
-            <div className="w-72 max-h-115 bg-white   flex flex-col gap-2 shrink-0 rounded-2xl p-5 ">
+            <div className="w-72 max-h-115 bg-white cursor-pointer   flex flex-col gap-2 shrink-0 rounded-2xl p-5 ">
               <div className="w-full h-30 flex items-center gap-2 ">
                 <img
-                  className="w-[40%] rounded-lg h-full object-cover"
+                  className="w-[40%] rounded-lg hover:scale-105 transition-all duration-150 h-full object-cover"
                   src={item.productImg}
                   alt=""
                 />
@@ -107,9 +112,26 @@ function BrandReviewPremium({ storeSettings }) {
                 </div>
               </div>
               {/* reviews */}
-              <div className="w-full h-10 flex justify-center items-center ">
-                {item.ratings}
-              </div>
+           <div className="w-full h-10 flex items-center gap-1">
+  {Array.from({ length: 5 }, (_, i) => {
+    const ratingValue = i + 1;
+    return (
+      <span
+        key={i}
+        className={`text-yellow-500 text-xl ${
+          item.ratings >= ratingValue
+            ? "scale-110" // fully filled star, slightly bigger
+            : item.ratings >= ratingValue - 0.5
+            ? "scale-105" // half or .5+ round-up effect
+            : "text-gray-300"
+        }`}
+      >
+        ★
+      </span>
+    );
+  })}
+  <p className="ml-2 text-sm font-semibold">{item.ratings.toFixed(1)}</p>
+</div>
               {/* main content */}
               <div className="w-full h-50 ">
                 <h3>{item.reviewTitle}</h3>

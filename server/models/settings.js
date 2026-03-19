@@ -88,11 +88,16 @@ const settingsSchema = new Schema(
           imageURL: { type: String, default: null },
         },
       ],
-      spotlightProduct: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "products",
-        default: null,
-      },
+      spotlightProduct: [
+        {
+          productID: {
+            type: Schema.Types.ObjectId,
+            ref: "products",
+            default: null,
+          },
+          expiresIn: { type: Date, default: null },
+        },
+      ],
       currency: { type: String, default: "Rs" },
       footerMenu1Name: { type: String, default: "Footer Menu 1" },
       footerMenu2Name: { type: String, default: "Footer Menu 2" },

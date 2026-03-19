@@ -175,25 +175,31 @@ router.delete('/brands-icons-delete/:sellerID' , async(req,res)=>{
 
 router.post('/set-spotlight-product/:sellerID', async (req, res) => {
   const { sellerID } = req.params;
-  const { productID } = req.body;
+  const { productID, expiresIn } = req.body;
 
-  if (!productID) {
-    return res.status(400).json({ message: "productID is required" });
+  if (!productID || !expiresIn) {
+    return res.status(400).json({ message: "productID and expiresIn are required" });
   }
 
   try {
-    // Update the nested spotlightProduct inside content
     const updatedSettings = await settingsModel.findOneAndUpdate(
       { sellerID },
-      { 'content.spotlightProduct': productID }, // replace old product
+      {
+        'content.spotlightProduct': [
+          {
+            productID,
+            expiresIn,
+          },
+        ], // ✅ overwrite with single object
+      },
       { new: true, upsert: true }
-    ).populate('content.spotlightProduct'); // ✅ populate the nested product
+    ).populate('content.spotlightProduct.productID'); // ✅ nested populate
 
     res.status(200).json({
       message: 'Spotlight product set successfully',
-      data: updatedSettings.content.spotlightProduct
+      data: updatedSettings.content.spotlightProduct,
     });
-
+        console.log("Updated spotlight product:", updatedSettings.content.spotlightProduct);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: 'Server error', error: err.message });
